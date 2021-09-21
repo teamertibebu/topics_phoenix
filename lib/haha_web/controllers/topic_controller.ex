@@ -1,6 +1,7 @@
 defmodule HahaWeb.TopicController do
   use HahaWeb, :controller
   alias HahaWeb.Topic
+  alias Haha.Repo
 
   # def index(conn, _params) do
   #   render(conn, "index.html")
@@ -12,6 +13,8 @@ defmodule HahaWeb.TopicController do
   end
 
   def create(_conn, %{"topic" => topic}) do
-    IO.inspect(topic)
+    changeset = Topic.changeset(%Topic{}, topic)
+
+    Repo.insert(changeset)
   end
 end
