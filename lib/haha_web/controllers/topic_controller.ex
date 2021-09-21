@@ -3,18 +3,25 @@ defmodule HahaWeb.TopicController do
   alias HahaWeb.Topic
   alias Haha.Repo
 
-  # def index(conn, _params) do
-  #   render(conn, "index.html")
-  # end
+  def index(conn, _params) do
+    topics = Repo.all(Topic)
+    render(conn, "index.html", topics: topics)
+  end
 
   def new(conn, _params) do
     changeset = Topic.changeset(%Topic{}, %{})
     render(conn, "new.html", changeset: changeset)
   end
 
-  def create(_conn, %{"topic" => topic}) do
+  def create(conn, %{"topic" => topic}) do
     changeset = Topic.changeset(%Topic{}, topic)
 
-    Repo.insert(changeset)
+    case Repo.insert(changeset) do
+      {:ok, _post} ->
+        index(conn, nil)
+
+      {:error, changeset} ->
+        render(conn, "new.html", changeset: changeset)
+    end
   end
 end
