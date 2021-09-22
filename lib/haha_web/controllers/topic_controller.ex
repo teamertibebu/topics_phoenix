@@ -52,16 +52,10 @@ defmodule HahaWeb.TopicController do
   end
 
   def delete(conn, %{"id" => topic_id}) do
-    topic = Repo.get!(Topic, topic_id)
+    Repo.get!(Topic, topic_id) |> Repo.delete!()
 
-    case Repo.delete(topic) do
-      {:ok, _topic} ->
-        conn
-        |> put_flash(:info, "Topic Deleted")
-        |> redirect(to: Routes.topic_path(conn, :index))
-
-      {:error, changeset} ->
-        IO.inspect(changeset)
-    end
+    conn
+    |> put_flash(:info, "Topic Deleted")
+    |> redirect(to: Routes.topic_path(conn, :index))
   end
 end
