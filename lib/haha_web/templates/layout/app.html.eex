@@ -10,14 +10,14 @@
     <script defer type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
      <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/>
   </head>
   <body>
     <nav class="light-blue">
       <div class="nav-wrapper container">
         <a href="/" class="brand-logo">Discussions</a>
         <div class="container">
-          <button class="btn">Sign Out</button>
+          <button class="btn waves-effect waves-light">Sign Out</button>
         </div>
       </div>
     </nav>
