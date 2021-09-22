@@ -40,12 +40,13 @@ defmodule HahaWeb.TopicController do
     changeset = Topic.changeset(old_topic, topic_changes)
 
     case Repo.update(changeset) do
-      {:ok, topic} ->
+      {:ok, _topic} ->
         conn
         |> put_flash(:info, "Topic Updated")
         |> redirect(to: Routes.topic_path(conn, :index))
+
       {:error, changeset} ->
-         render(conn, "edit.html", changeset: changeset, topic: old_topic)
+        render(conn, "edit.html", changeset: changeset, topic: old_topic)
     end
   end
 end
