@@ -35,6 +35,7 @@ defmodule HahaWeb.TopicController do
     render(conn, "edit.html", changeset: changeset, topic: topic)
   end
 
+  @spec update(Plug.Conn.t(), map) :: Plug.Conn.t()
   def update(conn, %{"id" => topic_id, "topic" => topic_changes}) do
     old_topic = Repo.get!(Topic, topic_id)
     changeset = Topic.changeset(old_topic, topic_changes)
@@ -47,6 +48,20 @@ defmodule HahaWeb.TopicController do
 
       {:error, changeset} ->
         render(conn, "edit.html", changeset: changeset, topic: old_topic)
+    end
+  end
+
+  def delete(conn, %{"id" => topic_id}) do
+    topic = Repo.get!(Topic, topic_id)
+
+    case Repo.delete(topic) do
+      {:ok, _topic} ->
+        conn
+        |> put_flash(:info, "Topic Deleted")
+        |> redirect(to: Routes.topic_path(conn, :index))
+
+      {:error, changeset} ->
+        IO.inspect(changeset)
     end
   end
 end

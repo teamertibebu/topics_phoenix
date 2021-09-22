@@ -21,7 +21,7 @@ defmodule HahaWeb.Router do
     # post "/topics", TopicController, :create
     # get "/topics/:id/edit", TopicController, :edit
     # put "/topics/:id", TopicController, :update
-    resources "/", TopicController
+    resources "/", TopicController, except: [:show]
   end
 
   # Other scopes may use custom stacks.
