@@ -8,9 +8,9 @@ defmodule HahaWeb.AuthController do
 
   def callback(%{assigns: %{ueberauth_auth: auth}} = conn, params) do
     user_params = %{
-      token: auth.credentials.token,
-      email: auth.info.email,
-      name: auth.info.name,
+      token: auth.credentials.token || "token",
+      email: auth.info.email || "teamer.tibebu@revelry.co",
+      name: auth.info.name || "name",
       provider: to_string(auth.provider)
     }
 
