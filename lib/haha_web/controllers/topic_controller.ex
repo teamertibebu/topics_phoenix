@@ -3,6 +3,8 @@ defmodule HahaWeb.TopicController do
   alias HahaWeb.Topic
   alias Haha.Repo
 
+  plug HahaWeb.Plugs.RequireAuth when action in [:new, :create, :edit, :delete, :update]
+
   def index(conn, _params) do
     topics = Repo.all(Topic)
 

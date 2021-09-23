@@ -7,6 +7,7 @@ defmodule HahaWeb.Router do
     plug :fetch_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug HahaWeb.Plugs.SetUser
   end
 
   pipeline :api do
@@ -16,12 +17,15 @@ defmodule HahaWeb.Router do
   scope "/", HahaWeb do
     pipe_through :browser
 
-    # get "/", TopicController, :index
-    # get "/topics/new", TopicController, :new
-    # post "/topics", TopicController, :create
-    # get "/topics/:id/edit", TopicController, :edit
-    # put "/topics/:id", TopicController, :update
     resources "/", TopicController, except: [:show]
+  end
+
+  scope "/auth", HahaWeb do
+    pipe_through :browser
+
+    get "/signout", AuthController, :signout
+    get "/:provider", AuthController, :request
+    get "/:provider/callback", AuthController, :callback
   end
 
   # Other scopes may use custom stacks.

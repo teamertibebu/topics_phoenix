@@ -23,6 +23,17 @@ config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
 
+# Configures Ueberauth
+config :ueberauth, Ueberauth,
+  providers: [
+    github: {Ueberauth.Strategy.Github, [opt1: "value", opts2: "value"]}
+  ]
+
+# Configures Ueberauth-Github
+config :ueberauth, Ueberauth.Strategy.Github.OAuth,
+  client_id: "be1a7b1eb80129c5b287",
+  client_secret: "2beba5ba93bddfedd3d2e43d2a000dfec2401b2e"
+
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
