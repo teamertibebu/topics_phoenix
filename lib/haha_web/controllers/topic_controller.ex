@@ -5,6 +5,7 @@ defmodule HahaWeb.TopicController do
   alias Haha.Repo
 
   plug HahaWeb.Plugs.RequireAuth when action in [:new, :create, :edit, :delete, :update]
+  plug :check_topic_owner when action in [:update, :edit, :delete]
 
   def index(conn, _params) do
     topics = Repo.all(Topic)
@@ -65,5 +66,18 @@ defmodule HahaWeb.TopicController do
     conn
     |> put_flash(:info, "Topic Deleted")
     |> redirect(to: Routes.topic_path(conn, :index))
+  end
+
+  def check_topic_owner(conn, _params) do
+    %{params: %{"id" => topic_id}} = conn
+
+    if Repo.get!(Topic, topic_id).user_id == conn.assigns.user.id do
+      conn
+    else
+      conn
+      |> put_flash(:error, "You cannot edit this topic.")
+      |> redirect(to: Routes.topic_path(conn, :index))
+      |> halt()
+    end
   end
 end
