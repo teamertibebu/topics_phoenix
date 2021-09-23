@@ -6,6 +6,7 @@ defmodule HahaWeb.User do
     field :email, :string
     field :token, :string
     field :provider, :string
+    has_many :topics, HahaWeb.Topic
 
     timestamps()
   end
